@@ -9,3 +9,12 @@ export function login({ email, password }) {
   const url = `${API_URL}login`;
   return apiRequest(url, "POST", data).catch(error => console.error(error));
 }
+
+export function signup({ email, password }) {
+  const data = {
+    email: email,
+    password: password
+  };
+  const url = `${API_URL}signup`;
+  return apiRequest(url, "POST", data).catch(error => console.error(error));
+}
