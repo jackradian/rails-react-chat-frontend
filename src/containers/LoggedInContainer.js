@@ -1,7 +1,15 @@
 import React from "react";
+import { Router, Redirect } from "@reach/router";
+
+import ChatHome from "../components/ChatHome";
 
 function LoggedInContainer() {
-  return <h1>Logged In</h1>;
+  return (
+    <Router>
+      <ChatHome path="/" />
+      <Redirect default noThrow from="*" to="/" />
+    </Router>
+  );
 }
 
 export default LoggedInContainer;

@@ -5,13 +5,11 @@ import Signup from "../components/Signup";
 
 function UnloggedInContainer() {
   return (
-    <div>
-      <Router>
-        <Login path="/" />
-        <Signup path="signup" />
-        <Redirect default noThrow from="*" to="/" />
-      </Router>
-    </div>
+    <Router>
+      <Login path="/" />
+      <Signup path="signup" />
+      <Redirect default noThrow from="*" to="/" />
+    </Router>
   );
 }
 
