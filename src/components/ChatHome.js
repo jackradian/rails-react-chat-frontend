@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import blueGrey from "@material-ui/core/colors/blueGrey";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -9,17 +10,27 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import actionCable from "actioncable";
 
 import UsersList from "./UsersList";
 import MessageWindow from "./MessageWindow";
+import MessageInput from "./MessageInput";
+import { myDirectRooms } from "../api/userApi";
 
 const drawerWidth = 240;
 
+const CableApp = {};
+CableApp.cable = actionCable.createConsumer("ws://localhost:3000/cable");
+
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    flexGrow: 1,
+    height: "100%",
+    background: blueGrey["50"]
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -37,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     })
   },
   menuButton: {
-    marginRight: 36
+    marginRight: theme.spacing(2)
   },
   hide: {
     display: "none"
@@ -60,10 +71,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: "hidden",
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1
-    }
+    width: theme.spacing(9) + 1
   },
   toolbar: {
     display: "flex",
@@ -74,15 +82,20 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   content: {
+    display: "flex",
+    height: "100vh",
+    flexDirection: "column",
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(1)
   }
 }));
 
 function ChatHome() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [rooms, setRooms] = useState([]);
+  const [currentRoomId, setCurrentRoomId] = useState(0);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -91,6 +104,39 @@ function ChatHome() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    myDirectRooms().then(data => {
+      console.log(data);
+      if (data && data.err === 0) {
+        setRooms(data.rooms);
+      }
+    });
+  }, []);
+
+  const currentRoomMessages = useMemo(() => {
+    const currentRoom = rooms.find(room => room.id === currentRoomId);
+    if (currentRoom) {
+      return currentRoom.messages;
+    } else {
+      return null;
+    }
+  }, [rooms, currentRoomId]);
+
+  function handleRoomClick(room_id) {
+    setCurrentRoomId(room_id);
+    CableApp.room = CableApp.cable.subscriptions.create(
+      {
+        channel: "RoomChannel",
+        room_id: room_id
+      },
+      {
+        received: roomData => {
+          console.log(roomData);
+        }
+      }
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -114,8 +160,11 @@ function ChatHome() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mini variant drawer
+            App
           </Typography>
+          <IconButton color="inherit" aria-label="">
+            <PersonAddRoundedIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -141,11 +190,12 @@ function ChatHome() {
           </IconButton>
         </div>
         <Divider />
-        <UsersList />
+        <UsersList rooms={rooms} handleRoomClick={handleRoomClick} />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <MessageWindow />
+        <MessageWindow messages={currentRoomMessages} />
+        <MessageInput />
       </main>
     </div>
   );
