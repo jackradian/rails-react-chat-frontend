@@ -8,14 +8,21 @@ import useErrorHandler from "../utils/custom-hooks/ErrorHandler";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const auth = React.useContext(authContext);
   const { error, showError } = useErrorHandler(null);
 
   function handleSubmit(event) {
     event.preventDefault();
-    signup({ email, password }).then(data => {
+    signup({ email, password, nickname, firstName, lastName }).then(data => {
       if (data.err === 0 && data.id) {
-        auth.setAuthStatus({ id: data.id, email: data.email });
+        auth.setAuthStatus({
+          id: data.id,
+          email: data.email,
+          nickname: data.nickname
+        });
         navigate("/");
       } else {
         auth.setUnauthStatus();
@@ -45,6 +52,30 @@ function Signup() {
             type="password"
             name="password"
             onChange={e => setPassword(e.target.value)}
+          />
+        </label>
+        <label>
+          Nickname:
+          <input
+            type="text"
+            name="nickname"
+            onChange={e => setNickname(e.target.value)}
+          />
+        </label>
+        <label>
+          First Name:
+          <input
+            type="text"
+            name="first_name"
+            onChange={e => setFirstName(e.target.value)}
+          />
+        </label>
+        <label>
+          Last Name:
+          <input
+            type="text"
+            name="last_name"
+            onChange={e => setLastName(e.target.value)}
           />
         </label>
         <input type="submit" value="Signup" />

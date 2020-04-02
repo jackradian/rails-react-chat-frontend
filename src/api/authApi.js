@@ -10,10 +10,13 @@ export function login({ email, password }) {
   return apiRequest(url, "POST", data).catch(error => console.error(error));
 }
 
-export function signup({ email, password }) {
+export function signup({ email, password, nickname, firstName, lastName }) {
   const data = {
     email: email,
-    password: password
+    password: password,
+    nickname: nickname,
+    first_name: firstName,
+    last_name: lastName
   };
   const url = `${API_URL}signup`;
   return apiRequest(url, "POST", data).catch(error => console.error(error));

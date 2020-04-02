@@ -14,7 +14,11 @@ function Login() {
     event.preventDefault();
     login({ email, password }).then(data => {
       if (data.err === 0 && data.id) {
-        auth.setAuthStatus({ id: data.id, email: data.email });
+        auth.setAuthStatus({
+          id: data.id,
+          email: data.email,
+          nickname: data.nickname
+        });
       } else {
         auth.setUnauthStatus();
         showError(data.msg);
