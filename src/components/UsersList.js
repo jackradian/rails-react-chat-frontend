@@ -15,7 +15,7 @@ function UsersList({ rooms, handleRoomClick }) {
         button
         key={room.id}
         selected={room.is_active}
-        onClick={() => handleRoomClick(room.id)}
+        onClick={() => handleRoomClick(room)}
       >
         <ListItemAvatar>
           <Avatar>
@@ -26,7 +26,7 @@ function UsersList({ rooms, handleRoomClick }) {
       </ListItem>
     ));
 
-  return <List>{showList}</List>;
+  return <List disablePadding>{showList}</List>;
 }
 
 export default UsersList;

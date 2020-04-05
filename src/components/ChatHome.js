@@ -131,8 +131,9 @@ function ChatHome() {
     }
   }, [rooms]);
 
-  function handleRoomClick(roomId) {
-    setActiveRoom(roomId);
+  function handleRoomClick(room) {
+    setActiveRoom(room.id);
+    room.subscription.perform("set_active_room");
   }
 
   return (
