@@ -23,7 +23,6 @@ function useRoomsHandler(initialState) {
 
   const addMessageToRoom = (msg, roomId) => {
     setRooms(rooms => {
-      console.log(rooms);
       const newRooms = rooms.map(r => {
         if (r.id === roomId) {
           return { ...r, messages: [...r.messages, msg] };
@@ -35,7 +34,19 @@ function useRoomsHandler(initialState) {
     });
   };
 
-  return { rooms, addRoom };
+  const setActiveRoom = roomId => {
+    setRooms(rooms => {
+      return rooms.map(r => {
+        if (r.id === roomId) {
+          return { ...r, is_active: true };
+        } else {
+          return { ...r, is_active: false };
+        }
+      });
+    });
+  };
+
+  return { rooms, addRoom, setActiveRoom };
 }
 
 export default useRoomsHandler;

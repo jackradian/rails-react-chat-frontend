@@ -11,7 +11,12 @@ function UsersList({ rooms, handleRoomClick }) {
     rooms &&
     rooms.length > 0 &&
     rooms.map(room => (
-      <ListItem button key={room.id} onClick={() => handleRoomClick(room.id)}>
+      <ListItem
+        button
+        key={room.id}
+        selected={room.is_active}
+        onClick={() => handleRoomClick(room.id)}
+      >
         <ListItemAvatar>
           <Avatar>
             <AccountCircleIcon />

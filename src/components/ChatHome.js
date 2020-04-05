@@ -97,7 +97,7 @@ function ChatHome() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const auth = useContext(authContext);
-  const { rooms, addRoom } = useRoomsHandler([]);
+  const { rooms, addRoom, setActiveRoom } = useRoomsHandler([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -131,13 +131,8 @@ function ChatHome() {
     }
   }, [rooms]);
 
-  function handleRoomClick(room_id) {
-    // const r = rooms.find(room => room.id === room_id);
-    // if (r) {
-    //   setCurrentRoom(r);
-    // } else {
-    //   setCurrentRoom({});
-    // }
+  function handleRoomClick(roomId) {
+    setActiveRoom(roomId);
   }
 
   return (
