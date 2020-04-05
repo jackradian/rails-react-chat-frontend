@@ -24,11 +24,15 @@ function MessageInput({ subscription }) {
 
   function catchReturn(e) {
     if (e.key === "Enter") {
-      console.log(`Pressed keyCode ${e.key}`);
-      subscription.perform("send_message", {
-        content: e.target.value,
-        sent_at: Date.now()
-      });
+      if (e.target.value) {
+        const value = e.target.value.trim();
+        if (value !== "") {
+          subscription.perform("send_message", {
+            content: value,
+            sent_at: Date.now()
+          });
+        }
+      }
       e.target.value = null;
       e.preventDefault();
     }

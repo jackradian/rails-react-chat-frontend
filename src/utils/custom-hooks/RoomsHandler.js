@@ -12,7 +12,6 @@ function useRoomsHandler(initialState) {
         },
         {
           received: msg => {
-            console.log(msg);
             addMessageToRoom(msg, room.id);
           }
         }
