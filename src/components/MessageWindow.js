@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
@@ -8,7 +8,8 @@ import { getStoredUserAuth } from "../utils/Helpers";
 const useStyles = makeStyles(theme => ({
   messageWindow: {
     height: "100%",
-    overflow: "auto"
+    overflow: "auto",
+    marginBottom: theme.spacing(1)
   },
   messageWrapper: {
     padding: theme.spacing(1),
@@ -69,11 +70,11 @@ function MessageWindow({ messages }) {
     <Box className={classes.messageWindow}>
       {messages &&
         messages.length > 0 &&
-        messages.map(msg =>
+        messages.map((msg, idx) =>
           msg.sender_nickname === currentUserNickname ? (
-            <MessageRight key={msg.id} msg={msg.content} sentAt={msg.sent_at} />
+            <MessageRight key={idx} msg={msg.content} sentAt={msg.sent_at} />
           ) : (
-            <MessageLeft key={msg.id} msg={msg.content} sentAt={msg.sent_at} />
+            <MessageLeft key={idx} msg={msg.content} sentAt={msg.sent_at} />
           )
         )}
     </Box>

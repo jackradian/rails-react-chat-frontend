@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
@@ -14,11 +14,13 @@ import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import actionCable from "actioncable";
+import { authContext } from "../contexts/AuthContext";
 
 import UsersList from "./UsersList";
 import MessageWindow from "./MessageWindow";
 import MessageInput from "./MessageInput";
 import { myDirectRooms } from "../api/userApi";
+import useRoomsHandler from "../utils/custom-hooks/RoomsHandler";
 
 const drawerWidth = 240;
 
@@ -94,8 +96,8 @@ function ChatHome() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [rooms, setRooms] = useState([]);
-  const [currentRoomId, setCurrentRoomId] = useState(0);
+  const auth = useContext(authContext);
+  const { rooms, addRoom } = useRoomsHandler([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -107,35 +109,35 @@ function ChatHome() {
 
   useEffect(() => {
     myDirectRooms().then(data => {
-      console.log(data);
-      if (data && data.err === 0) {
-        setRooms(data.rooms);
+      if (data) {
+        console.log(data.rooms);
+        if (data.err === 0) {
+          data.rooms.forEach(room => {
+            addRoom(room, CableApp.cable);
+          });
+        } else if (data.err === 1 && data.msg === "Unauthorized") {
+          auth.setUnauthStatus();
+        }
       }
     });
   }, []);
 
-  const currentRoomMessages = useMemo(() => {
-    const currentRoom = rooms.find(room => room.id === currentRoomId);
+  const currentRoom = useMemo(() => {
+    const currentRoom = rooms.find(room => room.is_active === true);
     if (currentRoom) {
-      return currentRoom.messages;
+      return currentRoom;
     } else {
-      return null;
+      return {};
     }
-  }, [rooms, currentRoomId]);
+  }, [rooms]);
 
   function handleRoomClick(room_id) {
-    setCurrentRoomId(room_id);
-    CableApp.room = CableApp.cable.subscriptions.create(
-      {
-        channel: "RoomChannel",
-        room_id: room_id
-      },
-      {
-        received: roomData => {
-          console.log(roomData);
-        }
-      }
-    );
+    // const r = rooms.find(room => room.id === room_id);
+    // if (r) {
+    //   setCurrentRoom(r);
+    // } else {
+    //   setCurrentRoom({});
+    // }
   }
 
   return (
@@ -162,9 +164,6 @@ function ChatHome() {
           <Typography variant="h6" noWrap>
             App
           </Typography>
-          <IconButton color="inherit" aria-label="">
-            <PersonAddRoundedIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -181,6 +180,9 @@ function ChatHome() {
         }}
       >
         <div className={classes.toolbar}>
+          <IconButton color="inherit" aria-label="">
+            <PersonAddRoundedIcon />
+          </IconButton>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -194,8 +196,8 @@ function ChatHome() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <MessageWindow messages={currentRoomMessages} />
-        <MessageInput />
+        <MessageWindow messages={currentRoom.messages} />
+        <MessageInput subscription={currentRoom.subscription} />
       </main>
     </div>
   );
