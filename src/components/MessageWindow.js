@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
@@ -65,6 +65,13 @@ function MessageRight({ msg, sentAt }) {
 function MessageWindow({ messages }) {
   const classes = useStyles();
   const currentUserNickname = getStoredUserAuth().nickname;
+  const windowBottomRef = useRef(null);
+
+  const scrollToBottom = () => {
+    windowBottomRef.current.scrollIntoView();
+  };
+
+  useEffect(scrollToBottom, [messages]);
 
   return (
     <Box className={classes.messageWindow}>
@@ -77,6 +84,7 @@ function MessageWindow({ messages }) {
             <MessageLeft key={idx} msg={msg.content} sentAt={msg.sent_at} />
           )
         )}
+      <div ref={windowBottomRef}></div>
     </Box>
   );
 }
