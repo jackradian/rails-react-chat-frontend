@@ -23,7 +23,7 @@ function MessageInput({ subscription }) {
   const classes = useStyles();
 
   function catchReturn(e) {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
       if (e.target.value) {
         const value = e.target.value.trim();
         if (value !== "") {

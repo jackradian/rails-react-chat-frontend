@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   sentAtRight: {
     marginLeft: theme.spacing(1),
     whiteSpace: "nowrap"
+  },
+  message: {
+    whiteSpace: "pre-wrap"
   }
 }));
 
@@ -33,7 +36,11 @@ function MessageLeft({ msg, sentAt }) {
     <Box display="flex" justifyContent="flex-start">
       <Box display="flex">
         <Paper className={classes.messageWrapper}>
-          <Typography component="span" color="secondary" className="selected">
+          <Typography
+            component="span"
+            color="secondary"
+            className={classes.message}
+          >
             {msg}
           </Typography>
         </Paper>
@@ -53,7 +60,11 @@ function MessageRight({ msg, sentAt }) {
           {sentAt}
         </Typography>
         <Paper className={classes.messageWrapper}>
-          <Typography component="span" color="primary">
+          <Typography
+            component="span"
+            color="primary"
+            className={classes.message}
+          >
             {msg}
           </Typography>
         </Paper>
