@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     background: blueGrey["50"]
   },
+  grow: {
+    flexGrow: 1
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
@@ -155,8 +158,9 @@ function ChatHome() {
           >
             <MenuIcon />
           </IconButton>
+          <div className={classes.grow} />
           <Typography variant="h6" noWrap>
-            App
+            Chat
           </Typography>
         </Toolbar>
       </AppBar>
