@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import actionCable from "actioncable";
@@ -21,11 +20,11 @@ import MessageWindow from "./MessageWindow";
 import MessageInput from "./MessageInput";
 import { myDirectRooms } from "../api/userApi";
 import useRoomsHandler from "../utils/custom-hooks/RoomsHandler";
+import AddUser from "./AddUser";
 
 const drawerWidth = 240;
 
-const CableApp = {};
-CableApp.cable = actionCable.createConsumer("ws://localhost:3000/cable");
+const Cable = actionCable.createConsumer("ws://localhost:3000/cable");
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -110,10 +109,9 @@ function ChatHome() {
   useEffect(() => {
     myDirectRooms().then(data => {
       if (data) {
-        console.log(data.rooms);
         if (data.err === 0) {
           data.rooms.forEach(room => {
-            addRoom(room, CableApp.cable);
+            addRoom(room, Cable);
           });
         } else if (data.err === 1 && data.msg === "Unauthorized") {
           auth.setUnauthStatus();
@@ -176,9 +174,7 @@ function ChatHome() {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton color="inherit" aria-label="">
-            <PersonAddRoundedIcon />
-          </IconButton>
+          <AddUser addRoom={addRoom} cable={Cable} />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
