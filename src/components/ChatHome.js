@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useContext } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
@@ -9,11 +9,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import actionCable from "actioncable";
 import { authContext } from "../contexts/AuthContext";
+import { logout } from "../api/authApi";
 
 import UsersList from "./UsersList";
 import MessageWindow from "./MessageWindow";
@@ -48,9 +49,6 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
   },
   hide: {
     display: "none"
@@ -96,17 +94,21 @@ const Cable = actionCable.createConsumer("ws://localhost:3000/cable");
 
 function ChatHome() {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const auth = useContext(authContext);
   const { rooms, addRoom, setActiveRoom } = useRoomsHandler([]);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setDrawerOpen(false);
+  };
+
+  const handleLogoutClick = () => {
+    logout();
+    auth.setUnauthStatus();
   };
 
   useEffect(() => {
@@ -143,7 +145,7 @@ function ChatHome() {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: drawerOpen
         })}
       >
         <Toolbar>
@@ -152,11 +154,20 @@ function ChatHome() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open
+            className={clsx({
+              [classes.hide]: drawerOpen
             })}
           >
             <MenuIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            aria-label="close drawer"
+            onClick={handleDrawerClose}
+            edge="start"
+            className={clsx({ [classes.hide]: !drawerOpen })}
+          >
+            <ChevronLeftIcon />
           </IconButton>
           <div className={classes.grow} />
           <Typography variant="h6" noWrap>
@@ -167,25 +178,21 @@ function ChatHome() {
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
+          [classes.drawerOpen]: drawerOpen,
+          [classes.drawerClose]: !drawerOpen
         })}
         classes={{
           paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
+            [classes.drawerOpen]: drawerOpen,
+            [classes.drawerClose]: !drawerOpen
           })
         }}
       >
         <div className={classes.toolbar}>
-          <AddUser addRoom={addRoom} cable={Cable} />
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+          <IconButton color="inherit" onClick={handleLogoutClick}>
+            <ExitToAppRoundedIcon />
           </IconButton>
+          <AddUser addRoom={addRoom} cable={Cable} />
         </div>
         <Divider />
         <UsersList rooms={rooms} handleRoomClick={handleRoomClick} />
