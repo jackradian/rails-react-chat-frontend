@@ -12,7 +12,7 @@ function UsersList({ rooms, handleRoomClick }) {
       <ListItem
         button
         key={room.id}
-        selected={room.is_active}
+        selected={room.is_current}
         onClick={() => handleRoomClick(room)}
       >
         <ListItemAvatar>

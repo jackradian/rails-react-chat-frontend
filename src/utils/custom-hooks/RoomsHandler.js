@@ -37,9 +37,9 @@ function useRoomsHandler(initialState) {
     setRooms(rooms => {
       return rooms.map(r => {
         if (r.id === roomId) {
-          return { ...r, is_active: true };
+          return { ...r, is_current: true };
         } else {
-          return { ...r, is_active: false };
+          return { ...r, is_current: false };
         }
       });
     });

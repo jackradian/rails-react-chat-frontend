@@ -24,8 +24,6 @@ import AddUser from "./AddUser";
 
 const drawerWidth = 240;
 
-const Cable = actionCable.createConsumer("ws://localhost:3000/cable");
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -94,6 +92,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const Cable = actionCable.createConsumer("ws://localhost:3000/cable");
+
 function ChatHome() {
   const classes = useStyles();
   const theme = useTheme();
@@ -124,7 +124,7 @@ function ChatHome() {
   }, []);
 
   const currentRoom = useMemo(() => {
-    const currentRoom = rooms.find(room => room.is_active === true);
+    const currentRoom = rooms.find(room => room.is_current === true);
     if (currentRoom) {
       return currentRoom;
     } else {
