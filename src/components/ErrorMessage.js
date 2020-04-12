@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 
 const ErrorMessage = ({ errorMessage }) => {
   return (
-    <Typography variant="subtitle1" noWrap color="error">
+    <Typography variant="subtitle1" color="error">
       {errorMessage}
     </Typography>
   );

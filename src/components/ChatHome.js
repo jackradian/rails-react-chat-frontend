@@ -189,10 +189,10 @@ function ChatHome() {
         }}
       >
         <div className={classes.toolbar}>
+          <AddUser addRoom={addRoom} cable={Cable} />
           <IconButton color="inherit" onClick={handleLogoutClick}>
             <ExitToAppRoundedIcon />
           </IconButton>
-          <AddUser addRoom={addRoom} cable={Cable} />
         </div>
         <Divider />
         <UsersList rooms={rooms} handleRoomClick={handleRoomClick} />

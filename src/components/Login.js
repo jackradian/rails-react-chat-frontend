@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import LoggedOutHeader from "./LoggedOutHeader";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import { login } from "../api/authApi";
 import { authContext } from "../contexts/AuthContext";
@@ -13,9 +11,6 @@ import ErrorMessage from "./ErrorMessage";
 import useErrorHandler from "../utils/custom-hooks/ErrorHandler";
 
 const useStyles = makeStyles(theme => ({
-  toolbar: {
-    ...theme.mixins.toolbar
-  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -24,10 +19,10 @@ const useStyles = makeStyles(theme => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
+    marginTop: theme.spacing(1),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 }));
 
@@ -55,12 +50,10 @@ function Login() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <LoggedOutHeader />
-      <div className={classes.toolbar} />
+    <Container maxWidth="xs">
       <div className={classes.paper}>
         <Typography component="h1" variant="h4">
-          Sign in
+          Login
         </Typography>
         {error && <ErrorMessage errorMessage={error} />}
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -86,27 +79,11 @@ function Login() {
             autoComplete="current-password"
             onChange={e => setPassword(e.target.value)}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          <FormControl margin="normal">
+            <Button type="submit" variant="contained" color="primary">
+              Login
+            </Button>
+          </FormControl>
         </form>
       </div>
     </Container>
