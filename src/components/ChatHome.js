@@ -15,7 +15,7 @@ import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import actionCable from "actioncable";
 import { authContext } from "../contexts/AuthContext";
 import { logout } from "../api/authApi";
-
+import { WEBSOCKET_URL } from "../utils/Constants";
 import UsersList from "./UsersList";
 import MessageWindow from "./MessageWindow";
 import MessageInput from "./MessageInput";
@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Cable = actionCable.createConsumer("ws://localhost:3000/cable");
+const Cable = actionCable.createConsumer(WEBSOCKET_URL);
 
 function ChatHome() {
   const classes = useStyles();
