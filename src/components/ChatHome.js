@@ -201,7 +201,10 @@ function ChatHome() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <MessageWindow messages={currentRoom.messages} />
-        <MessageInput subscription={currentRoom.subscription} />
+        <MessageInput
+          isEnabled={currentRoom.is_current}
+          subscription={currentRoom.subscription}
+        />
       </main>
     </div>
   );

@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function MessageInput({ subscription }) {
+function MessageInput({ isEnabled, subscription }) {
   const classes = useStyles();
 
   function catchReturn(e) {
@@ -40,18 +40,23 @@ function MessageInput({ subscription }) {
   }
 
   return (
-    <TextareaAutosize
-      className={classes.textField}
-      rowsMin={1}
-      rowsMax={4}
-      aria-label="input message"
-      placeholder="Input Message"
-      onKeyPress={catchReturn}
-    />
+    <React.Fragment>
+      {isEnabled ? (
+        <TextareaAutosize
+          className={classes.textField}
+          rowsMin={1}
+          rowsMax={4}
+          aria-label="input message"
+          placeholder="Input Message"
+          onKeyPress={catchReturn}
+        />
+      ) : null}
+    </React.Fragment>
   );
 }
 
 MessageInput.propTypes = {
+  isEnabled: PropTypes.bool,
   subscription: PropTypes.object
 };
 
