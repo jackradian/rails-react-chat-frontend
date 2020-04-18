@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import { DEFAULT_USER_AUTH } from "../utils/Constants";
 import useAuthHandler from "../utils/custom-hooks/AuthHandler";
 import { getStoredUserAuth } from "../utils/Helpers";
@@ -22,6 +22,10 @@ const AuthProvider = ({ children }) => {
       {children}
     </Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.element.isRequired
 };
 
 export default AuthProvider;

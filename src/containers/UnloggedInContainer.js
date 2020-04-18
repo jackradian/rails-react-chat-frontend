@@ -2,7 +2,6 @@ import React from "react";
 import LoggedOutHeader from "../components/LoggedOutHeader";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 import { Router, Redirect } from "@reach/router";
 import Login from "../components/Login";
 import Signup from "../components/Signup";

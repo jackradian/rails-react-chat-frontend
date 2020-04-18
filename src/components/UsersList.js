@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -24,5 +25,16 @@ function UsersList({ rooms, handleRoomClick }) {
 
   return <List disablePadding>{showList}</List>;
 }
+
+UsersList.propTypes = {
+  rooms: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      is_current: PropTypes.bool,
+      messages: PropTypes.array
+    })
+  ),
+  handleRoomClick: PropTypes.func.isRequired
+};
 
 export default UsersList;

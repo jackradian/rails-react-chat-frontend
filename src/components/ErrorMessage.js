@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 
 const ErrorMessage = ({ errorMessage }) => {
@@ -7,6 +8,10 @@ const ErrorMessage = ({ errorMessage }) => {
       {errorMessage}
     </Typography>
   );
+};
+
+ErrorMessage.propTypes = {
+  errorMessage: PropTypes.string
 };
 
 export default ErrorMessage;

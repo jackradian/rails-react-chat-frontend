@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -49,5 +50,9 @@ function MessageInput({ subscription }) {
     />
   );
 }
+
+MessageInput.propTypes = {
+  subscription: PropTypes.object
+};
 
 export default MessageInput;

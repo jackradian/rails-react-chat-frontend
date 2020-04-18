@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import PersonAddRoundedIcon from "@material-ui/icons/PersonAddRounded";
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AddUser({ addRoom, cable }) {
+function AddUser({ addRoom, cable }) {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [onError, setOnError] = React.useState(false);
@@ -112,3 +113,10 @@ export default function AddUser({ addRoom, cable }) {
     </div>
   );
 }
+
+AddUser.propTypes = {
+  addRoom: PropTypes.func,
+  cable: PropTypes.object
+};
+
+export default AddUser;

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
@@ -51,6 +52,10 @@ function MessageLeft({ msg, sentAt }) {
     </Box>
   );
 }
+MessageLeft.propTypes = {
+  msg: PropTypes.string,
+  sentAt: PropTypes.string
+};
 function MessageRight({ msg, sentAt }) {
   const classes = useStyles();
   return (
@@ -72,6 +77,10 @@ function MessageRight({ msg, sentAt }) {
     </Box>
   );
 }
+MessageRight.propTypes = {
+  msg: PropTypes.string,
+  sentAt: PropTypes.string
+};
 
 function MessageWindow({ messages }) {
   const classes = useStyles();
@@ -99,5 +108,15 @@ function MessageWindow({ messages }) {
     </Box>
   );
 }
+
+MessageWindow.propTypes = {
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      sender_nickname: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      sent_at: PropTypes.string.isRequired
+    })
+  )
+};
 
 export default MessageWindow;
