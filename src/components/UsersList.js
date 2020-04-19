@@ -5,6 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 
 function UsersList({ rooms, handleRoomClick }) {
   const showList =
@@ -19,7 +20,21 @@ function UsersList({ rooms, handleRoomClick }) {
         <ListItemAvatar>
           <Avatar>{room.user_nickname.slice(0, 2)}</Avatar>
         </ListItemAvatar>
-        <ListItemText primary={room.user_nickname} />
+        <ListItemText
+          primary={room.user_nickname}
+          secondary={
+            room.messages.length > 0 ? (
+              <Typography
+                component="p"
+                noWrap
+                variant="body2"
+                color="textSecondary"
+              >
+                {room.messages.slice(-1)[0].content}
+              </Typography>
+            ) : null
+          }
+        />
       </ListItem>
     ));
 
