@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import AppBar from "@material-ui/core/AppBar";
@@ -174,7 +173,6 @@ function ChatHome() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
@@ -187,7 +185,7 @@ function ChatHome() {
             <MenuIcon />
           </IconButton>
           <div className={classes.grow} />
-          <Typography variant="h6" noWrap>
+          <Typography variant="h5" noWrap>
             Chat
           </Typography>
         </Toolbar>
