@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo, useContext } from "react";
-import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
@@ -35,43 +34,30 @@ const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
   hide: {
     display: "none"
   },
+  appBar: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
+  },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+    [theme.breakpoints.up("sm")]: {
+      width: drawerWidth,
+      flexShrink: 0
+    },
     whiteSpace: "nowrap"
   },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+  drawerPaper: {
+    width: drawerWidth
   },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(9) + 1
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   },
   toolbar: {
     display: "flex",
@@ -140,35 +126,65 @@ function ChatHome() {
     room.subscription.perform("set_active_room");
   }
 
+  const drawerInner = (
+    <>
+      <div className={classes.toolbar}>
+        <AddUser addRoom={addRoom} cable={Cable} />
+        <IconButton color="inherit" onClick={handleLogoutClick}>
+          <ExitToAppRoundedIcon />
+        </IconButton>
+      </div>
+      <Divider />
+      <UsersList rooms={rooms} handleRoomClick={handleRoomClick} />
+    </>
+  );
+
+  const drawer = (
+    <nav className={classes.drawer}>
+      <Hidden smUp implementation="css">
+        <Drawer
+          anchor="left"
+          variant="temporary"
+          open={drawerOpen}
+          onClose={handleDrawerClose}
+          className={classes.drawer}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
+          {drawerInner}
+        </Drawer>
+      </Hidden>
+      <Hidden xsDown implementation="css">
+        <Drawer
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          variant="permanent"
+          open
+        >
+          {drawerInner}
+        </Drawer>
+      </Hidden>
+    </nav>
+  );
+
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: drawerOpen
-        })}
-      >
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx({
-              [classes.hide]: drawerOpen
-            })}
+            className={classes.menuButton}
           >
             <MenuIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="close drawer"
-            onClick={handleDrawerClose}
-            edge="start"
-            className={clsx({ [classes.hide]: !drawerOpen })}
-          >
-            <ChevronLeftIcon />
           </IconButton>
           <div className={classes.grow} />
           <Typography variant="h6" noWrap>
@@ -176,28 +192,7 @@ function ChatHome() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: drawerOpen,
-          [classes.drawerClose]: !drawerOpen
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: drawerOpen,
-            [classes.drawerClose]: !drawerOpen
-          })
-        }}
-      >
-        <div className={classes.toolbar}>
-          <AddUser addRoom={addRoom} cable={Cable} />
-          <IconButton color="inherit" onClick={handleLogoutClick}>
-            <ExitToAppRoundedIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <UsersList rooms={rooms} handleRoomClick={handleRoomClick} />
-      </Drawer>
+      {drawer}
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <MessageWindow messages={currentRoom.messages} />
