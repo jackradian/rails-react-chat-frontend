@@ -61,7 +61,7 @@ function Login() {
             variant="outlined"
             margin="normal"
             fullWidth
-            id="email"
+            id="login_email"
             label="Email Address"
             name="email"
             autoComplete="email"
@@ -75,7 +75,7 @@ function Login() {
             name="password"
             label="Password"
             type="password"
-            id="password"
+            id="login_password"
             autoComplete="current-password"
             onChange={e => setPassword(e.target.value)}
           />

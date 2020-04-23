@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -18,12 +19,12 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(1),
     background: "white"
   },
-  sentAtLeft: {
-    marginRight: theme.spacing(1),
-    whiteSpace: "nowrap"
+  messageLeft: {
+    backgroundColor: theme.palette.secondary.main,
+    color: "white"
   },
-  sentAtRight: {
-    marginLeft: theme.spacing(1),
+  sentAt: {
+    margin: theme.spacing(1),
     whiteSpace: "nowrap"
   },
   message: {
@@ -31,52 +32,35 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function MessageLeft({ msg, sentAt }) {
+function Message({ msg, sentAt, sender }) {
   const classes = useStyles();
+  const leftAlign = sender !== getStoredUserAuth().nickname;
   return (
-    <Box display="flex" justifyContent="flex-start">
-      <Box display="flex">
-        <Paper className={classes.messageWrapper}>
-          <Typography component="span" className={classes.message}>
-            {msg}
-          </Typography>
-        </Paper>
-        <Typography variant="caption" className={classes.sentAtRight}>
-          {sentAt}
+    <Box display="flex" flexDirection={leftAlign ? "row" : "row-reverse"}>
+      <Paper
+        className={clsx(classes.messageWrapper, {
+          [classes.messageLeft]: leftAlign
+        })}
+      >
+        <Typography component="span" className={classes.message}>
+          {msg}
         </Typography>
-      </Box>
+      </Paper>
+      <Typography variant="caption" className={classes.sentAt}>
+        {sentAt}
+      </Typography>
     </Box>
   );
 }
-MessageLeft.propTypes = {
+
+Message.propTypes = {
   msg: PropTypes.string,
-  sentAt: PropTypes.string
-};
-function MessageRight({ msg, sentAt }) {
-  const classes = useStyles();
-  return (
-    <Box display="flex" justifyContent="flex-end">
-      <Box display="flex">
-        <Typography variant="caption" className={classes.sentAtLeft}>
-          {sentAt}
-        </Typography>
-        <Paper className={classes.messageWrapper}>
-          <Typography component="span" className={classes.message}>
-            {msg}
-          </Typography>
-        </Paper>
-      </Box>
-    </Box>
-  );
-}
-MessageRight.propTypes = {
-  msg: PropTypes.string,
-  sentAt: PropTypes.string
+  sentAt: PropTypes.string,
+  sender: PropTypes.string
 };
 
 function MessageWindow({ messages }) {
   const classes = useStyles();
-  const currentUserNickname = getStoredUserAuth().nickname;
   const windowBottomRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -89,13 +73,14 @@ function MessageWindow({ messages }) {
     <Box className={classes.messageWindow}>
       {messages &&
         messages.length > 0 &&
-        messages.map((msg, idx) =>
-          msg.sender_nickname === currentUserNickname ? (
-            <MessageRight key={idx} msg={msg.content} sentAt={msg.sent_at} />
-          ) : (
-            <MessageLeft key={idx} msg={msg.content} sentAt={msg.sent_at} />
-          )
-        )}
+        messages.map((msg, idx) => (
+          <Message
+            key={idx}
+            msg={msg.content}
+            sentAt={msg.sent_at}
+            sender={msg.sender_nickname}
+          />
+        ))}
       <div ref={windowBottomRef}></div>
     </Box>
   );

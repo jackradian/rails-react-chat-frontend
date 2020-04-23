@@ -8,15 +8,15 @@ import UnloggedInContainer from "./UnloggedInContainer";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#a8e9ff",
-      main: "#75b7d8",
-      dark: "#4287a6",
-      contrastText: "#446e9e"
+      light: "#819ca9",
+      main: "#546e7a",
+      dark: "#29434e",
+      contrastText: "#fff"
     },
     secondary: {
-      light: "#affeff",
-      main: "#7ccbe0",
-      dark: "#489aae",
+      light: "#64c1ff",
+      main: "#0091ea",
+      dark: "#0064b7",
       contrastText: "#fff"
     }
   },
@@ -25,13 +25,13 @@ const theme = createMuiTheme({
       "Nunito",
       "-apple-system",
       "BlinkMacSystemFont",
-      '"Segoe UI"',
-      '"Helvetica Neue"',
+      "Segoe UI",
+      "Helvetica Neue",
       "Arial",
       "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"'
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol"
     ].join(",")
   }
 });
