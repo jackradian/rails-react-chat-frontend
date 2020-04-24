@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Box from "@material-ui/core/Box";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { makeStyles } from "@material-ui/core/styles";
+import SendRoundedIcon from "@material-ui/icons/SendRounded";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   textField: {
-    width: "100%",
+    flexGrow: 1,
     backgroundColor: "white",
     resize: "none",
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(1),
     fontSize: "1rem",
     borderRadius: theme.shape.borderRadius,
     border: "2px solid transparent",
@@ -16,6 +19,12 @@ const useStyles = makeStyles(theme => ({
     "&:focus": {
       outline: "none",
       border: `2px solid ${theme.palette.primary.main}`
+    }
+  },
+  sendButton: {
+    padding: theme.spacing(0, 1),
+    "&:hover": {
+      backgroundColor: "transparent"
     }
   }
 }));
@@ -40,18 +49,23 @@ function MessageInput({ isEnabled, subscription }) {
   }
 
   return (
-    <React.Fragment>
+    <>
       {isEnabled ? (
-        <TextareaAutosize
-          className={classes.textField}
-          rowsMin={1}
-          rowsMax={4}
-          aria-label="input message"
-          placeholder="Input Message"
-          onKeyPress={catchReturn}
-        />
+        <Box display="flex">
+          <TextareaAutosize
+            className={classes.textField}
+            rowsMin={1}
+            rowsMax={4}
+            aria-label="input message"
+            placeholder="Input Message"
+            onKeyPress={catchReturn}
+          />
+          <IconButton className={classes.sendButton}>
+            <SendRoundedIcon fontSize="large" />
+          </IconButton>
+        </Box>
       ) : null}
-    </React.Fragment>
+    </>
   );
 }
 
