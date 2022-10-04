@@ -10,6 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
+import Tooltip from '@material-ui/core/Tooltip';
 import actionCable from "actioncable";
 import { authContext } from "../contexts/AuthContext";
 import { logout } from "../api/authApi";
@@ -129,9 +130,11 @@ function ChatHome() {
     <>
       <div className={classes.toolbar}>
         <AddUser addRoom={addRoom} cable={Cable} />
-        <IconButton color="inherit" onClick={handleLogoutClick}>
-          <ExitToAppRoundedIcon />
-        </IconButton>
+        <Tooltip title="Logout">
+          <IconButton color="inherit" onClick={handleLogoutClick}>
+            <ExitToAppRoundedIcon />
+          </IconButton>
+        </Tooltip>
       </div>
       <Divider />
       <UsersList rooms={rooms} handleRoomClick={handleRoomClick} />

@@ -9,6 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Tooltip from '@material-ui/core/Tooltip';
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
 
 import { addFriend } from "../api/userApi";
@@ -98,9 +99,11 @@ function AddUser({ addRoom, cable }) {
 
   return (
     <div>
-      <IconButton onClick={handleOpen} color="inherit" aria-label="add user">
-        <PersonAddRoundedIcon />
-      </IconButton>
+      <Tooltip title="Add Friend">
+        <IconButton onClick={handleOpen} color="inherit" aria-label="add user">
+          <PersonAddRoundedIcon />
+        </IconButton>
+      </Tooltip>
       <Modal
         open={modalOpen}
         onClose={handleClose}
