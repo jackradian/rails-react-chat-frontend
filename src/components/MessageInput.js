@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
 import IconButton from "@material-ui/core/IconButton";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   textField: {
     flexGrow: 1,
     backgroundColor: "white",
@@ -18,15 +18,15 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[1],
     "&:focus": {
       outline: "none",
-      border: `2px solid ${theme.palette.primary.main}`
-    }
+      border: `2px solid ${theme.palette.primary.main}`,
+    },
   },
   sendButton: {
     padding: theme.spacing(0, 1),
     "&:hover": {
-      backgroundColor: "transparent"
-    }
-  }
+      backgroundColor: "transparent",
+    },
+  },
 }));
 
 function MessageInput({ isEnabled, subscription }) {
@@ -39,7 +39,7 @@ function MessageInput({ isEnabled, subscription }) {
         if (value !== "") {
           subscription.perform("send_message", {
             content: value,
-            sent_at: Date.now()
+            sent_at: Date.now(),
           });
         }
       }
@@ -71,7 +71,7 @@ function MessageInput({ isEnabled, subscription }) {
 
 MessageInput.propTypes = {
   isEnabled: PropTypes.bool,
-  subscription: PropTypes.object
+  subscription: PropTypes.object,
 };
 
 export default MessageInput;

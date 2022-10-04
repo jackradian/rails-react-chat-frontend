@@ -10,23 +10,23 @@ import { authContext } from "../contexts/AuthContext";
 import ErrorMessage from "./ErrorMessage";
 import useErrorHandler from "../utils/custom-hooks/ErrorHandler";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   toolbar: {
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
 function Signup() {
@@ -41,12 +41,12 @@ function Signup() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    signup({ email, password, nickname, firstName, lastName }).then(data => {
+    signup({ email, password, nickname, firstName, lastName }).then((data) => {
       if (data.err === 0 && data.id) {
         auth.setAuthStatus({
           id: data.id,
           email: data.email,
-          nickname: data.nickname
+          nickname: data.nickname,
         });
       } else {
         auth.setUnauthStatus();
@@ -74,7 +74,7 @@ function Signup() {
             label="Email Address"
             name="email"
             autoComplete="email"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             required
@@ -86,7 +86,7 @@ function Signup() {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
             required
@@ -97,7 +97,7 @@ function Signup() {
             label="Nickname"
             id="nickname"
             autoComplete="nickname"
-            onChange={e => setNickname(e.target.value)}
+            onChange={(e) => setNickname(e.target.value)}
           />
           <TextField
             required
@@ -107,7 +107,7 @@ function Signup() {
             name="first-name"
             label="First Name"
             id="first-name"
-            onChange={e => setFirstName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <TextField
             required
@@ -117,7 +117,7 @@ function Signup() {
             name="last-name"
             label="Last Name"
             id="last-name"
-            onChange={e => setLastName(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <FormControl margin="normal">
             <Button type="submit" variant="contained" color="primary">

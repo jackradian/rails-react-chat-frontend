@@ -8,21 +8,21 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     "&$selected, &$selected:hover": {
       backgroundColor: theme.palette.secondary.main,
-      color: "white"
-    }
+      color: "white",
+    },
   },
-  selected: {}
+  selected: {},
 }));
 
 function UsersList({ rooms, handleRoomClick }) {
   const classes = useStyles();
   const showList =
     rooms.length > 0 &&
-    rooms.map(room => (
+    rooms.map((room) => (
       <ListItem
         button
         key={room.id}
@@ -30,7 +30,7 @@ function UsersList({ rooms, handleRoomClick }) {
         onClick={() => handleRoomClick(room)}
         classes={{
           root: classes.root,
-          selected: classes.selected
+          selected: classes.selected,
         }}
       >
         <ListItemAvatar>
@@ -61,10 +61,10 @@ UsersList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       is_current: PropTypes.bool,
-      messages: PropTypes.array
+      messages: PropTypes.array,
     })
   ),
-  handleRoomClick: PropTypes.func.isRequired
+  handleRoomClick: PropTypes.func.isRequired,
 };
 
 export default UsersList;

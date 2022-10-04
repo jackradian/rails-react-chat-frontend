@@ -10,20 +10,20 @@ import { authContext } from "../contexts/AuthContext";
 import ErrorMessage from "./ErrorMessage";
 import useErrorHandler from "../utils/custom-hooks/ErrorHandler";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
 function Login() {
@@ -35,12 +35,12 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    login({ email, password }).then(data => {
+    login({ email, password }).then((data) => {
       if (data.err === 0 && data.id) {
         auth.setAuthStatus({
           id: data.id,
           email: data.email,
-          nickname: data.nickname
+          nickname: data.nickname,
         });
       } else {
         auth.setUnauthStatus();
@@ -66,7 +66,7 @@ function Login() {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -77,7 +77,7 @@ function Login() {
             type="password"
             id="login_password"
             autoComplete="current-password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControl margin="normal">
             <Button type="submit" variant="contained" color="primary">

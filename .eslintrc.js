@@ -3,19 +3,19 @@ module.exports = {
     browser: true,
     node: true,
     es6: true,
-    "jest/globals": true
+    "jest/globals": true,
   },
   extends: ["eslint:recommended", "plugin:react/recommended"],
   globals: {
     Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    SharedArrayBuffer: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["react", "jest"],
   settings: {
@@ -27,13 +27,13 @@ module.exports = {
       // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
       // default to latest and warns if missing
       // It will default to "detect" in the future
-      flowVersion: "0.53" // Flow version
-    }
+      flowVersion: "0.53", // Flow version
+    },
   },
   rules: {
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
-    semi: ["error", "always"]
-  }
+    semi: ["error", "always"],
+  },
 };

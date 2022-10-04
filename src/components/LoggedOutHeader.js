@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => ({
   grow: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export default function LoggedOutHeader() {

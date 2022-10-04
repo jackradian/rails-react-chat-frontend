@@ -6,13 +6,13 @@ import { Router, Redirect } from "@reach/router";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   toolbar: {
-    ...theme.mixins.toolbar
-  }
+    ...theme.mixins.toolbar,
+  },
 }));
 
 function UnloggedInContainer() {

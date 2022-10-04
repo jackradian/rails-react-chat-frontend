@@ -7,7 +7,7 @@ import { getStoredUserAuth } from "../utils/Helpers";
 export const authContext = React.createContext({
   auth: DEFAULT_USER_AUTH,
   setAuthStatus: () => {},
-  setUnauthStatus: () => {}
+  setUnauthStatus: () => {},
 });
 
 const { Provider } = authContext;
@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };
 
 export default AuthProvider;

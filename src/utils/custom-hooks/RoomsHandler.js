@@ -8,21 +8,21 @@ function useRoomsHandler(initialState) {
       room.subscription = actionCable.subscriptions.create(
         {
           channel: "RoomChannel",
-          room_id: room.id
+          room_id: room.id,
         },
         {
-          received: msg => {
+          received: (msg) => {
             addMessageToRoom(msg, room.id);
-          }
+          },
         }
       );
-      setRooms(rooms => [...rooms, room]);
+      setRooms((rooms) => [...rooms, room]);
     }
   };
 
   const addMessageToRoom = (msg, roomId) => {
-    setRooms(rooms => {
-      const newRooms = rooms.map(r => {
+    setRooms((rooms) => {
+      const newRooms = rooms.map((r) => {
         if (r.id === roomId) {
           return { ...r, messages: [...r.messages, msg] };
         } else {
@@ -33,9 +33,9 @@ function useRoomsHandler(initialState) {
     });
   };
 
-  const setActiveRoom = roomId => {
-    setRooms(rooms => {
-      return rooms.map(r => {
+  const setActiveRoom = (roomId) => {
+    setRooms((rooms) => {
+      return rooms.map((r) => {
         if (r.id === roomId) {
           return { ...r, is_current: true };
         } else {

@@ -7,29 +7,29 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { getStoredUserAuth } from "../utils/Helpers";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   messageWindow: {
     height: "100%",
     overflow: "auto",
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   messageWrapper: {
     padding: theme.spacing(1),
     display: "inline-block",
     marginBottom: theme.spacing(1),
-    background: "white"
+    background: "white",
   },
   messageLeft: {
     backgroundColor: theme.palette.secondary.main,
-    color: "white"
+    color: "white",
   },
   sentAt: {
     margin: theme.spacing(1),
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
   },
   message: {
-    whiteSpace: "pre-wrap"
-  }
+    whiteSpace: "pre-wrap",
+  },
 }));
 
 function Message({ msg, sentAt, sender }) {
@@ -39,7 +39,7 @@ function Message({ msg, sentAt, sender }) {
     <Box display="flex" flexDirection={leftAlign ? "row" : "row-reverse"}>
       <Paper
         className={clsx(classes.messageWrapper, {
-          [classes.messageLeft]: leftAlign
+          [classes.messageLeft]: leftAlign,
         })}
       >
         <Typography component="span" className={classes.message}>
@@ -56,7 +56,7 @@ function Message({ msg, sentAt, sender }) {
 Message.propTypes = {
   msg: PropTypes.string,
   sentAt: PropTypes.string,
-  sender: PropTypes.string
+  sender: PropTypes.string,
 };
 
 function MessageWindow({ messages }) {
@@ -91,9 +91,9 @@ MessageWindow.propTypes = {
     PropTypes.shape({
       sender_nickname: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      sent_at: PropTypes.string.isRequired
+      sent_at: PropTypes.string.isRequired,
     })
-  )
+  ),
 };
 
 export default MessageWindow;

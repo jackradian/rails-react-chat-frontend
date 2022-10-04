@@ -16,9 +16,9 @@ export const apiRequest = async (url, method, bodyParams) => {
     credentials: "include",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: bodyParams ? JSON.stringify(bodyParams) : undefined
+    body: bodyParams ? JSON.stringify(bodyParams) : undefined,
   });
   return await response.json();
 };

@@ -11,14 +11,14 @@ const theme = createMuiTheme({
       light: "#819ca9",
       main: "#546e7a",
       dark: "#29434e",
-      contrastText: "#fff"
+      contrastText: "#fff",
     },
     secondary: {
       light: "#64c1ff",
       main: "#0091ea",
       dark: "#0064b7",
-      contrastText: "#fff"
-    }
+      contrastText: "#fff",
+    },
   },
   typography: {
     fontFamily: [
@@ -31,9 +31,9 @@ const theme = createMuiTheme({
       "sans-serif",
       "Apple Color Emoji",
       "Segoe UI Emoji",
-      "Segoe UI Symbol"
-    ].join(",")
-  }
+      "Segoe UI Symbol",
+    ].join(","),
+  },
 });
 
 function RootContainer() {

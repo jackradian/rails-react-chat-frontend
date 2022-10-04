@@ -9,16 +9,16 @@ import InputLabel from "@material-ui/core/InputLabel";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from "@material-ui/core/Tooltip";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
 
 import { addFriend } from "../api/userApi";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   paper: {
     position: "absolute",
@@ -27,9 +27,9 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
     "&:focus": {
-      outline: "none"
-    }
-  }
+      outline: "none",
+    },
+  },
 }));
 
 function AddUser({ addRoom, cable }) {
@@ -47,9 +47,9 @@ function AddUser({ addRoom, cable }) {
     setModalOpen(false);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    addFriend(keyword).then(data => {
+    addFriend(keyword).then((data) => {
       if (data) {
         console.log(data);
         if (data.err === 0) {
@@ -77,7 +77,7 @@ function AddUser({ addRoom, cable }) {
             fullWidth
             type="text"
             placeholder="Input Email or Nickname"
-            onChange={e => setKeyword(e.target.value)}
+            onChange={(e) => setKeyword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -119,7 +119,7 @@ function AddUser({ addRoom, cable }) {
 
 AddUser.propTypes = {
   addRoom: PropTypes.func,
-  cable: PropTypes.object
+  cable: PropTypes.object,
 };
 
 export default AddUser;

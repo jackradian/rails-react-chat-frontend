@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from "@material-ui/core/Tooltip";
 import actionCable from "actioncable";
 import { authContext } from "../contexts/AuthContext";
 import { logout } from "../api/authApi";
@@ -24,40 +24,40 @@ import AddUser from "./AddUser";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexGrow: 1,
     height: "100%",
-    background: blueGrey["50"]
+    background: blueGrey["50"],
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+      marginLeft: drawerWidth,
+    },
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0
+      flexShrink: 0,
     },
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   toolbar: {
     display: "flex",
@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     display: "flex",
@@ -73,8 +73,8 @@ const useStyles = makeStyles(theme => ({
     overflow: "hidden",
     flexDirection: "column",
     flexGrow: 1,
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 const Cable = actionCable.createConsumer(WEBSOCKET_URL);
@@ -99,10 +99,10 @@ function ChatHome() {
   };
 
   useEffect(() => {
-    myDirectRooms().then(data => {
+    myDirectRooms().then((data) => {
       if (data) {
         if (data.err === 0) {
-          data.rooms.forEach(room => {
+          data.rooms.forEach((room) => {
             addRoom(room, Cable);
           });
         } else if (data.err === 1 && data.msg === "Unauthorized") {
@@ -113,7 +113,7 @@ function ChatHome() {
   }, []);
 
   const currentRoom = useMemo(() => {
-    const currentRoom = rooms.find(room => room.is_current === true);
+    const currentRoom = rooms.find((room) => room.is_current === true);
     if (currentRoom) {
       return currentRoom;
     } else {
@@ -151,10 +151,10 @@ function ChatHome() {
           onClose={handleDrawerClose}
           className={classes.drawer}
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {drawerInner}
@@ -163,7 +163,7 @@ function ChatHome() {
       <Hidden xsDown implementation="css">
         <Drawer
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
           variant="permanent"
           open
